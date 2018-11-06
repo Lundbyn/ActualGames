@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PlatInTheMatt:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PlatInTheMatt_jar</output-path>
+    <root id="archive" name="PlatInTheMatt.jar">
+      <element id="module-output" name="PlatInTheMatt" />
+    </root>
+  </artifact>
+</component>

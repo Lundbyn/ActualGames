@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" nodeOrientation="LEFT_TO_RIGHT" prefHeight="680.0" prefWidth="1200.0" styleClass="ingamebg" stylesheets="@Background.css" translateZ="5.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXML.GameController">
+   <children>
+      <Rectangle fx:id="pausedBackground" arcHeight="5.0" arcWidth="5.0" fill="#838383" height="680.0" opacity="0.6" stroke="BLACK" strokeType="INSIDE" width="1200.0" />
+      <CheckBox fx:id="muteSfxBox" layoutX="1100.0" layoutY="10.0" mnemonicParsing="false" onAction="#sfxControl" prefHeight="30.0" prefWidth="80.0" text="Mute SFX" />
+      <Button fx:id="btnResume" layoutX="525.0" layoutY="175.0" mnemonicParsing="false" onAction="#resumeGame" prefHeight="40.0" prefWidth="150.0" text="Resume" translateZ="5.0" />
+      <Button fx:id="btnSave" layoutX="525.0" layoutY="245.0" mnemonicParsing="false" onAction="#saveGame" prefHeight="40.0" prefWidth="150.0" text="Save game" />
+      <Button fx:id="btnRestart" layoutX="525.0" layoutY="385.0" mnemonicParsing="false" onAction="#restartGame" prefHeight="40.0" prefWidth="150.0" text="Restart game" />
+      <Button fx:id="btnLoad" layoutX="525.0" layoutY="315.0" mnemonicParsing="false" onAction="#loadProgress" prefHeight="40.0" prefWidth="150.0" text="Load game" />
+      <Button fx:id="btnQuit" layoutX="525.0" layoutY="500.0" mnemonicParsing="false" onAction="#quitGame" prefHeight="40.0" prefWidth="150.0" text="Exit game" />
+      <Label fx:id="totalDeaths" layoutX="416.0" layoutY="130.0" text="You died a total of XX times">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label fx:id="deathCounter" layoutX="14.0" layoutY="17.0" text="Deaths: XX">
+         <font>
+            <Font name="Stencil" size="19.0" />
+         </font>
+      </Label>
+      <Label fx:id="deathMessage" layoutX="450.0" layoutY="292.0" text="You died. Press 'R' to respawn" textFill="#ff9000">
+         <font>
+            <Font name="Stencil" size="19.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
