@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
 import java.net.URL;
+import java.security.Key;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
@@ -19,6 +20,8 @@ public class Controller implements Initializable {
     Player player;
     Rectangle rec;
     Level level;
+    int power = 0;
+    boolean space = false;
 
 
     @Override
@@ -27,9 +30,11 @@ public class Controller implements Initializable {
         System.out.println("LEL");
         player = new Player();
         player.setLevelList(level.getPlatformList());
-        pane.getChildren().add(player.getView());
+        pane.getChildren().addAll(player.getView(), player.getPower());
         player.getView().setTranslateX(10);
         player.getView().setTranslateY(20);
+
+
 
         initializeKeyListeners();
         initializeCameraListener();
@@ -43,6 +48,8 @@ public class Controller implements Initializable {
 
                 rec.setTranslateY(rec.getTranslateY() + 2);
                 testMethod2();
+
+                updatePlayerBullets();
             }
         };
         gameTimer.start();
@@ -55,8 +62,9 @@ public class Controller implements Initializable {
 
     private void testMethod2() {
         for(Platform platform : level.getPlatformList()) {
-            if(platform.getRec().getBoundsInParent().intersects(rec.getBoundsInParent())) {
-                platform.getRec().setVisible(false);
+            if(platform.getView().getBoundsInParent().intersects(rec.getBoundsInParent())) {
+                platform.getView().setVisible(false);
+                platform.setActive(false);
             }
         }
     }
@@ -72,6 +80,15 @@ public class Controller implements Initializable {
             if (e.getCode() == KeyCode.W) {
                 player.setUp(true);
             }
+            if(e.getCode() == KeyCode.E || e.getCode() == KeyCode.Q) {
+                player.setProtection(e.getCode().toString().toLowerCase().charAt(0));
+            }
+            if(e.getCode() == KeyCode.SPACE) {
+                space = true;
+            }
+            if(e.getCode() == KeyCode.R) {
+                player.reset();
+            }
         });
 
         pane.setOnKeyReleased(e -> {
@@ -84,6 +101,10 @@ public class Controller implements Initializable {
             if (e.getCode() == KeyCode.W) {
                 player.setUp(false);
             }
+            if(e.getCode() == KeyCode.SPACE) {
+                player.shoot(power, pane);
+                space = false;
+            }
         });
     }
 
@@ -95,5 +116,26 @@ public class Controller implements Initializable {
                 pane.setLayoutX(-(offset - 700));
             }
         }));
+    }
+
+    private void updatePlayerBullets() {
+        for(PlayerBullet pb : player.getPlayerBullets()) {
+            for (Platform platform : level.getPlatformList()) {
+                if (pb.getView().getBoundsInParent().intersects(platform.getView().getBoundsInParent())) {
+                    pb.remove();
+                }
+            }
+        }
+
+        if(space) {
+            if(power < 50) {
+                power++;
+                player.getPower().setWidth(power);
+            }
+        }
+        else {
+            player.getPower().setWidth(0);
+            power = 0;
+        }
     }
 }

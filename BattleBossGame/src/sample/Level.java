@@ -11,8 +11,8 @@ public class Level {
     private final int platformWidth = 60;
     private final int platformHeight = 60;
     private ArrayList<Platform> platformList = new ArrayList<>();
-    Platform rec;
-    Color color;
+    private Platform platform;
+    private Color color;
 
 
     Level(int currentLevel, Pane pane) {
@@ -27,9 +27,9 @@ public class Level {
                         break;
 
                     case '1':
-                        rec = new Platform(j* platformWidth, i * platformHeight, platformWidth, platformHeight, color);
-                        pane.getChildren().add(rec.getRec());
-                        platformList.add(rec);
+                        platform = new Platform(j* platformWidth, i * platformHeight, platformWidth, platformHeight, Color.ORANGE);
+                        pane.getChildren().add(platform.getView());
+                        platformList.add(platform);
                         break;
 
                 }

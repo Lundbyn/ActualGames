@@ -3,17 +3,26 @@ package sample;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Platform {
+public class Platform  {
 
-    Rectangle rec;
-    Color color;
+    private Rectangle view;
+    private boolean active;
 
     public Platform(int x, int y, int width, int height, Color color) {
-        this.rec = new Rectangle(x,y,width,height);
-        rec.setFill(color);
+        this.view = new Rectangle(x,y,width,height);
+        this.view.setFill(color);
+        this.active = true;
     }
 
-    public Rectangle getRec() {
-        return rec;
+    public Rectangle getView() {
+        return view;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
