@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -45,11 +46,13 @@ public class Controller {
             public void handle(long now) {
                 time++;
                 if(time % 2 == 0) {
-
                     if (deadEnd(current)) {
                         if(!deque.isEmpty()) {
-                            current = deque.pollFirst();
-                            current.setColor('5');
+                            current = deque.peekFirst();
+                            if(deadEnd(current)) {
+                                deque.pollFirst();
+                                current.setColor('5');
+                            }
                         }
                         else {
                             pauseOrPlay();
