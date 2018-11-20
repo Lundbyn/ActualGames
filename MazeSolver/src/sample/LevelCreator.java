@@ -10,6 +10,15 @@ public class LevelCreator {
 
     public LevelCreator(Pane pane, int maze) {
 
+        if(maze >= MazeData.MAZES.length) {
+            return;
+        }
+        squares.clear();
+        if(!testStringArray(maze)) {
+            System.out.println("Labyrinten er ikke riktig");
+            return;
+        }
+
         //Creating squares from the map created tin MazeData class
         for (int i = 0; i < MazeData.MAZES[maze].length; i++) {
             String line = MazeData.MAZES[maze][i];
@@ -24,7 +33,7 @@ public class LevelCreator {
 
         //Setting adjacent squares
         Square adjacent;
-        int length = MazeData.MAZES[0][0].length();
+        int length = MazeData.MAZES[maze][0].length();
         for (int i = 0; i < squares.size(); i++) {
             Square current = squares.get(i);
 
@@ -66,6 +75,15 @@ public class LevelCreator {
 
     }
 
+    private boolean testStringArray(int maze) {
+        int lineLength = MazeData.MAZES[maze][0].length();
+        for(int i = 1; i < MazeData.MAZES[maze].length; i++) {
+            if(lineLength != MazeData.MAZES[maze][i].length()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 
     public ArrayList<Square> getSquares() {

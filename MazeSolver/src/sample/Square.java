@@ -43,11 +43,11 @@ public class Square {
                         break;
 
                         //Square visited
-            case '4':   view.setFill(Color.LIGHTBLUE);
+            case '4':   view.setFill(Color.ORANGE);
                         visited = true;
                         break;
 
-            case '5':   view.setFill(Color.BLUE);
+            case '5':   view.setFill(Color.RED);
                         break;
         }
     }
