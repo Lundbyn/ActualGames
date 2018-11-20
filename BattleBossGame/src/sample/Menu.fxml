@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MenuController">
+   <children>
+      <Button fx:id="btnNormal" layoutX="645.0" layoutY="335.0" mnemonicParsing="false" onAction="#loadNormal" prefHeight="50.0" prefWidth="150.0" text="Normal mode" />
+      <Button fx:id="btnDash" layoutX="645.0" layoutY="443.0" mnemonicParsing="false" onAction="#loadDash" prefHeight="50.0" prefWidth="150.0" text="Dash mode" />
+   </children>
+</Pane>

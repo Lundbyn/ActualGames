@@ -2,11 +2,15 @@ package sample;
 
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
+import java.io.IOException;
 import java.net.URL;
 import java.security.Key;
 import java.util.ResourceBundle;
@@ -88,6 +92,9 @@ public class Controller implements Initializable {
             }
             if(e.getCode() == KeyCode.R) {
                 player.reset();
+            }
+            if(e.getCode() == KeyCode.ESCAPE) {
+                //Do something
             }
         });
 
