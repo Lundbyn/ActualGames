@@ -2,8 +2,10 @@ package sample;
 
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
@@ -19,6 +21,8 @@ public class Controller {
     @FXML Button btnSolveMaze;
     @FXML Button btnLoadMaze;
     @FXML Button btnPauseOrPlay;
+    @FXML Button btnDrawMaze;
+    @FXML Button btnSaveMaze;
 
     //Declares references
     LevelCreator lvl;
@@ -27,18 +31,60 @@ public class Controller {
     Square current;
     ArrayList<Square> squares;
     ArrayDeque<Square> deque;
+    Rat rat;
 
     //Declares variables
     private int time;
-    boolean isPaused, isSolving = true;
+    boolean isPaused, isSolved = false, isSolving = true;
+    char editSquare = '0';
+
+
+    //Maze drawer (BETA)
+    public void drawMaze() {
+
+        //Gets x and y for clicked position
+        mazePane.setOnMouseClicked(e -> {
+            double xClick = e.getX();
+            double yClick = e.getY();
+
+            //Tests to see if clicked position contains square
+            for (Square square : lvl.getSquares()) {
+                if (xClick >= square.getXpos() && xClick <= square.getXpos() + 20
+                 && yClick >= square.getYpos() && yClick <= square.getYpos() + 20
+                 && square.getTrait() != 2 && square.getTrait() != 3) {
+                    //If position contains square edit square
+                    current = square;
+                    current.setColor(editSquare);
+                }
+            }
+            //Prints clicked position
+            System.out.println(e.getX() + " - " + e.getY());
+        });
+
+        //Adds listeners to 1 and 2, deciding new trait for edited squares
+        mazePane.requestFocus();
+        mazePane.setOnKeyPressed(e -> {
+            if(e.getCode() == KeyCode.DIGIT1) {
+                editSquare = '0';
+            }
+            if(e.getCode() == KeyCode.DIGIT2) {
+                editSquare = '1';
+            }
+        });
+    }
+
+    //Listener for btnSaveMaze
+    public void saveMaze() {
+        //Decides adjacent squares for drawn maze
+        lvl.setAdjacents(0, squares);
+    }
+
 
     public void solveMaze() {
         if(isSolving) return;
         isSolving = true;
+        isSolved = false;
         isPaused = false;
-
-        //Creating a FIFO queue
-        deque = new ArrayDeque<>();
 
         //Setting start and preparing deque.
         current = start;
@@ -48,8 +94,8 @@ public class Controller {
             @Override
             public void handle(long now) {
                 time++;
-                if(time % 3 == 0) {
-
+                if(true) {
+                //Replace true with (time % 2 == 0)
                     //Checks to see if it can go right. Sets current to right-square and recolors if possible.
                     if (current.right != null && !current.right.isVisited()) {
                         current = current.right;
@@ -98,9 +144,7 @@ public class Controller {
 
                     //Found goal, end process
                     if (current.getTrait() == 3) {
-                        timer.stop();
-                        System.out.println("solved!");
-                        current.setColor('3');
+                        runRat();
                     }
                 }
             }
@@ -108,15 +152,28 @@ public class Controller {
         timer.start();
     }
 
-    public void loadMaze() {
+    private void runRat() {
+        timer.stop();
+        System.out.println("solved!");
+        current.setColor('3');
 
+        if(rat == null) rat = new Rat();
+        mazePane.getChildren().add(rat.getView());
+        rat.setPosition(deque.peekLast().getView().getTranslateX(), deque.peekLast().getView().getTranslateY());
+        rat.getView().toFront();
+        rat.startMovement(deque);
+    }
+
+    public void loadMaze() {
         //Resets maze and maze-pane
         isSolving = false;
+        isSolved = false;
         lvl = null;
         mazePane.getChildren().clear();
+        deque = new ArrayDeque<>();
 
         //Selecting maze. If NaN maze 0 is selected by default
-        int mazeSelector = 0;
+        int mazeSelector = 1;
         try {
             mazeSelector = Integer.parseInt(txtSelect.getText());
         }
@@ -162,5 +219,4 @@ public class Controller {
                 (current.up == null || current.up.isVisited()));
 
     }
-
 }

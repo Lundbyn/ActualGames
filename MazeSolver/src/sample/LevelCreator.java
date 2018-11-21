@@ -30,8 +30,11 @@ public class LevelCreator {
             }
         }
 
+        setAdjacents(maze, squares);
+    }
 
-        //Setting adjacent squares
+    //Setting adjacent squares
+    public void setAdjacents(int maze, ArrayList<Square> squares) {
         Square adjacent;
         int length = MazeData.MAZES[maze][0].length();
         for (int i = 0; i < squares.size(); i++) {
@@ -72,7 +75,6 @@ public class LevelCreator {
                 }
             }
         }
-
     }
 
     //Tests to see if all lines are the same length.

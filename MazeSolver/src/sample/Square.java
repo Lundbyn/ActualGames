@@ -59,6 +59,14 @@ public class Square {
         view.setTranslateY(y);
     }
 
+    public double getXpos() {
+        return view.getTranslateX();
+    }
+
+    public double getYpos() {
+        return view.getTranslateY();
+    }
+
     public boolean isVisited() {
         return visited;
     }
