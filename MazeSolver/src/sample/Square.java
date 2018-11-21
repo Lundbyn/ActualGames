@@ -22,12 +22,12 @@ public class Square {
     public void setColor(int colorValue) {
         switch (colorValue) {
 
-            //Free square
+                        //Free square
             case '0':   view.setFill(Color.LIGHTGREY);
                         trait = 0;
                         break;
 
-            //Wall square
+                        //Wall square
             case '1':   view.setFill(Color.DARKGRAY);
                         trait = 1;
                         break;
@@ -37,7 +37,7 @@ public class Square {
                         trait = 2;
                         break;
 
-            //End square
+                        //End square
             case '3':   view.setFill(Color.YELLOW);
                         trait = 3;
                         break;
@@ -47,11 +47,13 @@ public class Square {
                         visited = true;
                         break;
 
+                        //When the solver moves backwards, it leaves the squares red.
             case '5':   view.setFill(Color.RED);
                         break;
         }
     }
 
+    //Sets both x and y position with given parameters
     public void setPos(double x, double y) {
         view.setTranslateX(x);
         view.setTranslateY(y);
@@ -61,10 +63,12 @@ public class Square {
         return visited;
     }
 
+    //Getter for trait. trait can be wall, open square and end square.
     public int getTrait() {
         return trait;
     }
 
+    //Sets square to visited. A visited square is never going back to not visited.
     public void setVisited() {
         visited = true;
     }

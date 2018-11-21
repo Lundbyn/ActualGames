@@ -2,6 +2,7 @@ package sample;
 
 public class MazeData {
 
+    //Data maps used to create mazes
     public static String[][] MAZES = {
             {
                     "11111111111",
@@ -58,6 +59,16 @@ public class MazeData {
                     "10000000000000000001",
                     "12000000000000000001",
                     "11111111111111111111"
+            },
+            {
+                    "11111111",
+                    "12000001",
+                    "11110101",
+                    "11003101",
+                    "10011101",
+                    "10110001",
+                    "10000101",
+                    "11111111"
             }
     };
 

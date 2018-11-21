@@ -75,6 +75,7 @@ public class LevelCreator {
 
     }
 
+    //Tests to see if all lines are the same length.
     private boolean testStringArray(int maze) {
         int lineLength = MazeData.MAZES[maze][0].length();
         for(int i = 1; i < MazeData.MAZES[maze].length; i++) {
