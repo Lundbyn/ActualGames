@@ -2,12 +2,12 @@ package sample;
 
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class Controller {
     @FXML Button btnLoadMaze;
     @FXML Button btnPauseOrPlay;
     @FXML Button btnDrawMaze;
-    @FXML Button btnSaveMaze;
+    @FXML static Rectangle background;
 
     //Declares references
     LevelCreator lvl;
@@ -34,13 +34,16 @@ public class Controller {
     Rat rat;
 
     //Declares variables
-    private int time;
-    boolean isPaused, isSolved = false, isSolving = true;
+    private int mazeSelector, time;
+    boolean isPaused, isSolved = false, isSolving = true, isDrawing = false;
     char editSquare = '0';
 
 
     //Maze drawer (BETA)
     public void drawMaze() {
+
+        isDrawing = true;
+        loadMaze(0);
 
         //Gets x and y for clicked position
         mazePane.setOnMouseClicked(e -> {
@@ -48,13 +51,15 @@ public class Controller {
             double yClick = e.getY();
 
             //Tests to see if clicked position contains square
-            for (Square square : lvl.getSquares()) {
-                if (xClick >= square.getXpos() && xClick <= square.getXpos() + 20
-                 && yClick >= square.getYpos() && yClick <= square.getYpos() + 20
-                 && square.getTrait() != 2 && square.getTrait() != 3) {
-                    //If position contains square edit square
-                    current = square;
-                    current.setColor(editSquare);
+            if(isDrawing) {
+                for (Square square : lvl.getSquares()) {
+                    if (xClick >= square.getXpos() && xClick <= square.getXpos() + 20
+                            && yClick >= square.getYpos() && yClick <= square.getYpos() + 20
+                            && square.getTrait() != 2 && square.getTrait() != 3) {
+                        //If position contains square edit square
+                        current = square;
+                        current.setColor(editSquare);
+                    }
                 }
             }
             //Prints clicked position
@@ -73,18 +78,15 @@ public class Controller {
         });
     }
 
-    //Listener for btnSaveMaze
-    public void saveMaze() {
-        //Decides adjacent squares for drawn maze
-        lvl.setAdjacents(0, squares);
-    }
-
 
     public void solveMaze() {
         if(isSolving) return;
         isSolving = true;
         isSolved = false;
         isPaused = false;
+
+        if(isDrawing) lvl.setAdjacents(0,squares);
+        isDrawing = false;
 
         //Setting start and preparing deque.
         current = start;
@@ -94,7 +96,7 @@ public class Controller {
             @Override
             public void handle(long now) {
                 time++;
-                if(true) {
+                if(time % 2 == 0) {
                 //Replace true with (time % 2 == 0)
                     //Checks to see if it can go right. Sets current to right-square and recolors if possible.
                     if (current.right != null && !current.right.isVisited()) {
@@ -166,26 +168,55 @@ public class Controller {
 
     public void loadMaze() {
         //Resets maze and maze-pane
+        /*
+        isSolving = false;
+        isSolved = false;
+        lvl = null;
+        mazePane.getChildren().clear();
+        deque = new ArrayDeque<>();
+        */
+
+        //Selecting maze. If NaN maze 1 is selected by default
+        try {
+            mazeSelector = Integer.parseInt(txtSelect.getText());
+        }
+        catch (Exception e) {
+            mazeSelector = 1;
+            System.out.println("Ikke et tall");
+        }
+        loadMaze(mazeSelector);
+        isDrawing = false;
+
+        //if(isDrawing) mazeSelector = 0;
+
+        /*
+        //Creates level using levelCreator.
+        lvl = new LevelCreator(mazePane, mazeSelector);
+        squares = lvl.getSquares();
+
+        //Finds start-sqaure and makes it orange.
+        for(int i = 0; i < squares.size(); i++) {
+            if(squares.get(i).getTrait() == 2) {
+                start = squares.get(i);
+                start.setColor('4');
+                break;
+            }
+        }
+        */
+    }
+
+    private void loadMaze(int maze) {
+        //Resets maze and maze-pane
         isSolving = false;
         isSolved = false;
         lvl = null;
         mazePane.getChildren().clear();
         deque = new ArrayDeque<>();
 
-        //Selecting maze. If NaN maze 0 is selected by default
-        int mazeSelector = 1;
-        try {
-            mazeSelector = Integer.parseInt(txtSelect.getText());
-        }
-        catch (Exception e) {
-            System.out.println("Ikke et tall");
-        }
-
         //Creates level using levelCreator.
-        lvl = new LevelCreator(mazePane, mazeSelector);
+        lvl = new LevelCreator(mazePane, maze);
         squares = lvl.getSquares();
 
-        //Finds start-sqaure and makes it orange.
         for(int i = 0; i < squares.size(); i++) {
             if(squares.get(i).getTrait() == 2) {
                 start = squares.get(i);
@@ -214,9 +245,17 @@ public class Controller {
     //If all directions is visited or null, its a dead end.
     public boolean deadEnd(Square current) {
         return  ((current.right == null || current.right.isVisited()) &&
-                (current.down == null || current.down.isVisited() ) &&
+                (current.down == null || current.down.isVisited()) &&
                 (current.left == null || current.left.isVisited()) &&
                 (current.up == null || current.up.isVisited()));
 
     }
+
+    /*
+    public static void resize(Number w) {
+        double width = (double)w;
+        background.setWidth(width);
+        System.out.println(w);
+    }
+    */
 }
