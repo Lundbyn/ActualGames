@@ -3,7 +3,7 @@ package sample;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Square {
+public class Square extends Rectangle {
 
     private Rectangle view;
     private boolean visited = false;

@@ -22,16 +22,6 @@ public class Main extends Application {
         System.out.println("Stage heigth: " + primaryStage.getHeight());
         System.out.println("scene width: " + scene.getWidth());
         System.out.println("scene height: " + scene.getHeight());
-
-        /*
-        primaryStage.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-                Controller.resize(arg2);
-                System.out.println(arg1 + " " + arg2);
-            }
-        });
-        */
     }
 
 

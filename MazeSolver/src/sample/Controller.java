@@ -22,7 +22,7 @@ public class Controller {
     @FXML Button btnLoadMaze;
     @FXML Button btnPauseOrPlay;
     @FXML Button btnDrawMaze;
-    @FXML static Rectangle background;
+    @FXML Rectangle background;
 
     //Declares references
     LevelCreator lvl;
@@ -45,25 +45,26 @@ public class Controller {
         isDrawing = true;
         loadMaze(0);
 
-        //Gets x and y for clicked position
-        mazePane.setOnMouseClicked(e -> {
-            double xClick = e.getX();
-            double yClick = e.getY();
+        System.out.println(background.getWidth());
 
+
+        //Gets x and y for clicked position
+        mazePane.setOnMouseDragged(e -> {
             //Tests to see if clicked position contains square
             if(isDrawing) {
                 for (Square square : lvl.getSquares()) {
-                    if (xClick >= square.getXpos() && xClick <= square.getXpos() + 20
+
+                    if(e.getPickResult().getIntersectedNode() == square.getView()) {
+                        if(square.getTrait() != 2 && square.getTrait() != 3)
+
+                    /*if (xClick >= square.getXpos() && xClick <= square.getXpos() + 20
                             && yClick >= square.getYpos() && yClick <= square.getYpos() + 20
-                            && square.getTrait() != 2 && square.getTrait() != 3) {
+                            && square.getTrait() != 2 && square.getTrait() != 3) {*/
                         //If position contains square edit square
-                        current = square;
-                        current.setColor(editSquare);
+                        square.setColor(editSquare);
                     }
                 }
             }
-            //Prints clicked position
-            System.out.println(e.getX() + " - " + e.getY());
         });
 
         //Adds listeners to 1 and 2, deciding new trait for edited squares
@@ -250,12 +251,4 @@ public class Controller {
                 (current.up == null || current.up.isVisited()));
 
     }
-
-    /*
-    public static void resize(Number w) {
-        double width = (double)w;
-        background.setWidth(width);
-        System.out.println(w);
-    }
-    */
 }
