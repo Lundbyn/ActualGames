@@ -2,12 +2,14 @@ package sample;
 
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -23,6 +25,9 @@ public class Controller {
     @FXML Button btnPauseOrPlay;
     @FXML Button btnDrawMaze;
     @FXML Rectangle background;
+
+    public static double width = 800.00;
+    public static double height = 600.00;
 
     //Declares references
     LevelCreator lvl;
@@ -45,7 +50,14 @@ public class Controller {
         isDrawing = true;
         loadMaze(0);
 
+
+        //Relocate testing
+        background.setWidth(width);
+        background.setHeight(height);
+        mazePane.setLayoutX((width / 2) - 217);
+        mazePane.setLayoutY((height / 2) - 200);
         System.out.println(background.getWidth());
+
 
 
         //Gets x and y for clicked position
@@ -53,14 +65,8 @@ public class Controller {
             //Tests to see if clicked position contains square
             if(isDrawing) {
                 for (Square square : lvl.getSquares()) {
-
                     if(e.getPickResult().getIntersectedNode() == square.getView()) {
                         if(square.getTrait() != 2 && square.getTrait() != 3)
-
-                    /*if (xClick >= square.getXpos() && xClick <= square.getXpos() + 20
-                            && yClick >= square.getYpos() && yClick <= square.getYpos() + 20
-                            && square.getTrait() != 2 && square.getTrait() != 3) {*/
-                        //If position contains square edit square
                         square.setColor(editSquare);
                     }
                 }
@@ -98,7 +104,7 @@ public class Controller {
             public void handle(long now) {
                 time++;
                 if(time % 2 == 0) {
-                //Replace true with (time % 2 == 0)
+
                     //Checks to see if it can go right. Sets current to right-square and recolors if possible.
                     if (current.right != null && !current.right.isVisited()) {
                         current = current.right;
@@ -168,16 +174,6 @@ public class Controller {
     }
 
     public void loadMaze() {
-        //Resets maze and maze-pane
-        /*
-        isSolving = false;
-        isSolved = false;
-        lvl = null;
-        mazePane.getChildren().clear();
-        deque = new ArrayDeque<>();
-        */
-
-        //Selecting maze. If NaN maze 1 is selected by default
         try {
             mazeSelector = Integer.parseInt(txtSelect.getText());
         }
@@ -188,22 +184,6 @@ public class Controller {
         loadMaze(mazeSelector);
         isDrawing = false;
 
-        //if(isDrawing) mazeSelector = 0;
-
-        /*
-        //Creates level using levelCreator.
-        lvl = new LevelCreator(mazePane, mazeSelector);
-        squares = lvl.getSquares();
-
-        //Finds start-sqaure and makes it orange.
-        for(int i = 0; i < squares.size(); i++) {
-            if(squares.get(i).getTrait() == 2) {
-                start = squares.get(i);
-                start.setColor('4');
-                break;
-            }
-        }
-        */
     }
 
     private void loadMaze(int maze) {
@@ -251,4 +231,13 @@ public class Controller {
                 (current.up == null || current.up.isVisited()));
 
     }
+
+    public static void setWidth(Number number) {
+        width = (double) number;
+    }
+
+    public static void setHeight(Number number) {
+        height = (double) number;
+    }
+
 }

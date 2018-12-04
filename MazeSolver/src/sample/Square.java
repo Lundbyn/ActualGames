@@ -11,7 +11,7 @@ public class Square extends Rectangle {
     public Square left, right, down, up;
 
     public Square(char trait) {
-        view = new Rectangle(20,20);
+        view = new Rectangle(20.00,20.00);
         setColor(trait);
     }
 

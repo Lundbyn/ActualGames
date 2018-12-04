@@ -14,6 +14,6 @@
       <Button fx:id="btnSolveMaze" layoutX="191.0" layoutY="10.0" mnemonicParsing="false" onAction="#solveMaze" prefWidth="80.0" text="Solve maze" />
       <Pane fx:id="mazePane" layoutX="50.0" layoutY="50.0" prefHeight="500.0" prefWidth="700.0" />
       <Button fx:id="btnPauseOrPlay" layoutX="280.0" layoutY="10.0" mnemonicParsing="false" onAction="#pauseOrPlay" prefWidth="80.0" text="Pause" />
-      <Button fx:id="btnDrawMaze" layoutX="700.0" layoutY="10.0" mnemonicParsing="false" onAction="#drawMaze" prefWidth="80.0" text="Draw maze" />
+      <Button fx:id="btnDrawMaze" layoutX="400.0" layoutY="10.0" mnemonicParsing="false" onAction="#drawMaze" prefWidth="80.0" text="Draw maze" />
    </children>
 </AnchorPane>
