@@ -22,7 +22,7 @@ public class Pipe {
         active = true;
         Random r = new Random();
 
-        height = r.nextInt(500) + 50;
+        height = r.nextInt(450) + 50;
 
         upper = new Rectangle(width,height,color);
         upper.setY(0);

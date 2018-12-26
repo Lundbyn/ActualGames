@@ -2,10 +2,12 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="mainPane" fx:id="mainPane" maxHeight="1200.0" maxWidth="1800.0" minHeight="400.0" minWidth="600.0" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="800.0" stroke="BLACK" strokeType="INSIDE" width="1200.0" />
       <Label fx:id="txtPreGame" layoutX="500.0" layoutY="365.0" text="Press 'SPACE' to start">
          <font>
             <Font name="Impact" size="24.0" />
